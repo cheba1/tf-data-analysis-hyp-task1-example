@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from math import sqrt
+from scipy.stats import norm
 
 
 chat_id = 725861714 # Ваш chat ID, не меняйте название переменной
