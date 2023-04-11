@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
-from math import sqrt
-from scipy.stats import norm
+from statsmodels.stats.proportion import proportions_ztest
 
 
 chat_id = 725861714 # Ваш chat ID, не меняйте название переменной
@@ -13,13 +12,8 @@ def solution(x_success: int,
     # Измените код этой функции
     # Это будет вашим решением
     # Не меняйте название функции и её аргументы
-    alpha=0.02
-    p1 = x_success / x_cnt
-    p2 = y_success / y_cnt
-    p_combined = (x_success + y_success) / (x_cnt + y_cnt)
-    z_value = (p1 - p2) / sqrt(p_combined * (1 - p_combined) * (1 / x_cnt + 1 / y_cnt))
-    if abs(z_value) > norm.ppf(1 - alpha / 2):
-        return True  # отвергаем H0
-    else:
-        return False  # не отвергаем H0
+    _, pval = proportions_ztest([x_success, y_success], [x_cnt, y_cnt], alternative='larger')
+    alpha = 0.02
+    effect = (pval < alpha)
     
+    return effect # Ваш ответ, True или False
